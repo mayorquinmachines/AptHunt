@@ -1,0 +1,5 @@
+boto3==1.4.4
+geopy==1.11.0
+lxml==3.7.2
+requests==2.10.0
+simplejson==3.10.0

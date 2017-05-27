@@ -18,11 +18,11 @@ DYNAMODB = boto3.resource('dynamodb')
 TABLE = DYNAMODB.Table(cc.CL_bucket_name)
 
 #initializing bounding boxes and BARF distance
-BBOXES = [x for x in open(cc.PROJECT_PATH + 'bbox.csv', 'r')]
+BBOXES = [x for x in open(cc.PROJECT_ROOT + 'data/bbox.csv', 'r')]
 BOXES = {i: BBOXES[i].strip('\n').split(',') for i in range(len(BBOXES))}
 
 BARF_STNS = []
-with open(PROJECT_PATH + 'BARF.csv', 'r') as csvfile:
+with open(PROJECT_ROOT + 'data/BARF.csv', 'r') as csvfile:
     datareader = csv.reader(csvfile, delimiter=',')
     header = next(datareader)
     for row in datareader:
@@ -77,7 +77,7 @@ for result in CL_ADS.get_results(sort_by='newest', geotagged=True, limit=cc.LIMI
 
                 #retrieving google maps picture
                 pic_name = 'streetview_' + str(result["id"]) + '.jpg'
-                helpers.get_street(geotag, '/'.join([cc.PROJECT_PATH, result['id']]), pic_name, API_KEY)
+                helpers.get_street(geotag, '/'.join([cc.PROJECT_ROOT, result['id']]), pic_name, API_KEY)
                 streetpic_url = cc.CL_bucket_path + pic_name
 
             #retrieving all data from html page
@@ -87,7 +87,7 @@ for result in CL_ADS.get_results(sort_by='newest', geotagged=True, limit=cc.LIMI
 
             #Getting all pics from post
             for i, imgs in enumerate(imgs_pth):
-                wget_com = "wget " + "-O " + cc.PROJECT_PATH + str(result['id'])+ "/" + \
+                wget_com = "wget " + "-O " + cc.PROJECT_ROOT + str(result['id'])+ "/" + \
                             str(result['id']) + "_"+ str(i) + ".jpg " + imgs
                 subprocess.call(wget_com, shell=True)
             cmd = "aws s3 sync ./%s s3://%s/ --acl public-read" %(result['id'], cc.CL_bucket_name)
