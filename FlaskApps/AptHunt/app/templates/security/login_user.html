@@ -1,162 +1,28 @@
-<!DOCTYPE html>
-
-<!--
-  Name: Con - Admin Dashboard with Material Design
-  Version: 3.0.0
-  Author: _nK
-  Website: http://nkdev.info
-  Purchase: http://themeforest.net/item/con-material-admin-dashboard-template/10621512?ref=_nK
-  Support: http://nk.ticksy.com
-  License: You must have a valid license purchased only from ThemeForest (the above link) in order to legally use the theme for your project.
-  Copyright 2016.
--->
-
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="_nK">
-    <link rel="icon" href="assets/_con/images/icon.png">
+    <title>AptHunt Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+    <body>
+      <div class="container">
+         <h2>AptHunt Login</h2>
 
-    <title>Con - Admin Dashboard with Material Design</title>
-
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
-
-    <!-- nanoScroller -->
-    <link rel="stylesheet" type="text/css" href="../../static/bower_components/nanoscroller/bin/css/nanoscroller.css" />
-
-    <!-- FontAwesome -->
-    <link rel="stylesheet" type="text/css" href="../../static/bower_components/fontawesome/css/font-awesome.min.css" />
-
-    <!-- Material Design Icons -->
-    <link rel="stylesheet" type="text/css" href="../../static/assets/material-design-icons/css/material-design-icons.min.css" />
-
-    <!-- IonIcons -->
-    <link rel="stylesheet" type="text/css" href="../../static/bower_components/ionicons/css/ionicons.min.css" />
-
-    <!-- WeatherIcons -->
-    <link rel="stylesheet" type="text/css" href="../../static/bower_components/weather-icons/css/weather-icons.min.css" />
-
-
-
-
-
-
-
-	<link href="https://fonts.googleapis.com/css?family=Tulpen+One" rel="stylesheet">
-
-
-
-    <!-- Main -->
-    <link rel="stylesheet" type="text/css" href="../../static/assets/_con/css/con-base.css" />
-
-    <!--[if lt IE 9]>
-        <script src="bower_components/html5shiv/dist/html5shiv.min.js"></script>
-    <![endif]-->
 {% from "security/_macros.html" import render_field_with_errors, render_field %}
 
-</head>
-
-<body>
-
-    <section id="sign-in">
-
-        <!-- Background Bubbles -->
-        <canvas id="bubble-canvas"></canvas>
-        <!-- /Background Bubbles -->
-
-        <!-- Sign In Form -->
-	  <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
-            <div class="row links">
-                <div class="col s6 logo">
-                    <!--<img src="../../static/assets/_con/images/logo-white.png" alt="">-->
-		    <h1 style="font-family: Tulpen One, cursive; font-size: 60px">Apt Hunt</h1>
-
-                </div>
-                <div class="col s6 right-align">
-                    <strong>Sign In</strong> / <a href="{{ url_for('security.register') }}">Sign Up</a></div>
-            </div>
-
-            <div class="card-panel clearfix">
-
-
-                <div class="row">
-                    <div class="col"></div>
-                </div>
-
-                <!-- Username -->
-                <div class="input-field">
-		    {{ login_user_form.hidden_tag() }}
-		    {{ render_field_with_errors(login_user_form.email, class_="form-control") }}
-
-                    <!--<i class="fa fa-user prefix"></i>
-                    <input id="username-input" type="text" class="validate">
-                    <label for="username-input">Username</label>-->
-                </div>
-                <!-- /Username -->
-
-                <!-- Password -->
-                <div class="input-field">
-			{{ render_field_with_errors(login_user_form.password, class_="form-control") }}
-			    {% if login_user_form.password_confirm %}
-				    {{ render_field_with_errors(login_user_form.password_confirm, class_="form-control") }}
-				    {% endif %}
-
-                    <!--<i class="fa fa-unlock-alt prefix"></i>
-                    <input id="password-input" type="password" class="validate">
-                    <label for="password-input">Password</label>-->
-                </div>
-                <!-- /Password -->
-
-		{{ render_field(login_user_form.submit,  class_="waves-effect waves-light btn-large z-depth-0 z-depth-1-hover") }}
-
-                <!--<button class="waves-effect waves-light btn-large z-depth-0 z-depth-1-hover">Sign In</button>-->
-            </div>
-
-            <div class="links right-align">
-                <a href="{{ url_for('security.forgot_password') }}">Forgot Password?</a>
-            </div>
-
+        <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
+            {{ login_user_form.hidden_tag() }}
+            {{ render_field_with_errors(login_user_form.email, class_="form-control") }}
+            {{ render_field_with_errors(login_user_form.password, class_="form-control") }}
+            {% if login_user_form.password_confirm %}
+                    {{ render_field_with_errors(login_user_form.password_confirm, class_="form-control") }}
+                    {% endif %}
+                    {{ render_field(login_user_form.submit,  class_="waves-effect waves-light btn btn-default") }}
         </form>
-        <!-- /Sign In Form -->
-
-    </section>
-
-
-    <!-- jQuery -->
-    <script type="text/javascript" src="../../static/bower_components/jquery/dist/jquery.min.js"></script>
-
-    <!-- jQuery RAF (improved animation performance) -->
-    <script type="text/javascript" src="../../static/bower_components/jquery-requestAnimationFrame/dist/jquery.requestAnimationFrame.min.js"></script>
-
-    <!-- nanoScroller -->
-    <script type="text/javascript" src="../../static/bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js"></script>
-
-    <!-- Materialize -->
-    <script type="text/javascript" src="../../static/bower_components/materialize/bin/materialize.js"></script>
-
-
-
-
-
-
-
-
-
-
-    <!-- Sortable -->
-    <script type="text/javascript" src="../../static/bower_components/Sortable/Sortable.min.js"></script>
-
-    <!-- Main -->
-    <script type="text/javascript" src="../../static/assets/_con/js/_con.js"></script>
-
-    <!-- Google Prettify -->
-    <script type="text/javascript" src="../../static/bower_components/code-prettify/src/prettify.js"></script>
-
-
-</body>
-
+        <p><a href="{{ url_for('security.register') }}">Register New User</a></p>
+        <p><a href="{{ url_for('security.forgot_password') }}">Forgot Password</a></p>
+       </div>
+    </body>
 </html>
