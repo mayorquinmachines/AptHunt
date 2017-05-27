@@ -4,11 +4,10 @@ import os
 import urllib
 import subprocess
 from decimal import Decimal
-import pandas as pd
+import csv
 import boto3
 from craigslist import CraigslistHousing
 from geopy.distance import vincenty
-#from craigslist_config import *
 import craigslist_config as cc
 import helper_funcs as helpers
 
@@ -22,9 +21,13 @@ TABLE = DYNAMODB.Table(cc.CL_bucket_name)
 BBOXES = [x for x in open(cc.PROJECT_PATH + 'bbox.csv', 'r')]
 BOXES = {i: BBOXES[i].strip('\n').split(',') for i in range(len(BBOXES))}
 
-BARF_STNS = pd.read_csv(cc.PROJECT_PATH + 'BARF.csv', index_col=0, dtype=str)
-BARF_STNS['coords'] = zip(BARF_STNS.station_lat.values, BARF_STNS.station_lng.values)
-TRANSIT_STATIONS = BARF_STNS[['coords']].to_dict()['coords']
+BARF_STNS = []
+with open(PROJECT_PATH + 'BARF.csv', 'r') as csvfile:
+    datareader = csv.reader(csvfile, delimiter=',')
+    header = next(datareader)
+    for row in datareader:
+        BARF_STNS.append(row)
+TRANSIT_STATIONS = {barf[0]: tuple(barf[1:]) for barf in BARF_STNS}
 
 
 CL_ADS = CraigslistHousing(site=cc.SITE, area=cc.AREA, category=cc.CATEGORY,
