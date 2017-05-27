@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>AptHunt Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+    <body id="scoutrises">
+      <div class="container">
+         <h2>AptHunt Register</h2>
+
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+        <form action="{{ url_for_security('register') }}" method="POST" name="register_form">
+            {{ register_user_form.hidden_tag() }}
+            {{ render_field_with_errors(register_user_form.email, class_="form-control") }}
+            {{ render_field_with_errors(register_user_form.password, class_="form-control") }}
+		{% if register_user_form.password_confirm %}
+                    {{ render_field_with_errors(register_user_form.password_confirm, class_="form-control") }}
+                    {% endif %}
+                    {{ render_field(register_user_form.submit,  class_="waves-effect waves-light btn btn-default") }}
+        </form>
+        <p><a href="{{ url_for('security.login') }}">Login</a></p>
+       </div>
+    </body>
+</html>

@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Scout Stack Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+    <body id="scoutrises">
+      <div class="container">
+         <h2>Scout Stack Login</h2>
+
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+
+        <form action="{{ url_for_security('login') }}" method="POST" name="login_form">
+            {{ login_user_form.hidden_tag() }}
+            {{ render_field_with_errors(login_user_form.email, class_="form-control") }}
+            {{ render_field_with_errors(login_user_form.password, class_="form-control") }}
+            {% if login_user_form.password_confirm %}
+                    {{ render_field_with_errors(login_user_form.password_confirm, class_="form-control") }}
+                    {% endif %}
+                    {{ render_field(login_user_form.submit,  class_="waves-effect waves-light btn btn-default") }}
+        </form>
+        <p><a href="{{ url_for('security.register') }}">Register New User</a></p>
+        <p><a href="{{ url_for('security.forgot_password') }}">Forgot Password</a></p>
+       </div>
+    </body>
+</html>
