@@ -7,7 +7,7 @@ def main():
         cmd = 'sudo apt-get install '+ package
         subprocess.call(cmd.split(), shell=True)
     print "Moving directories and files"
-    Flask_path = os.path.abspath('FlaskApps/')
+    Flask_path = os.path.abspath('/AptHunt/FlaskApps/')
     os.rename(Flask_path, '/var/www/FlaskApps')
     os.rename('/var/www/FlaskApps/AptHunt.conf', '/etc/apache2/sites-available/AptHunt.conf')
     setup_cmd = [['a2enmod', 'wsgi'], ['apachectl', 'restart'], ['a2ensite', 'AptHunt'], ['service', 'apache2',
